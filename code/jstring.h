@@ -1,11 +1,15 @@
 /* date = August 6th 2020 7:24 pm */
 
-#ifndef JSTRIN_H
-#define JSTRIN_H
+#ifndef JSTRING_H
+#define JSTRING_H
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+#define internal static
+#define global static
+#define localPersist static
 
 #define kiloBytes(value) ((value) * 1024LL)
 #define megaBytes(value) (kiloBytes(value) * 1024LL)
@@ -22,9 +26,9 @@ typedef struct {
 } jString;
 
 //length of string
-unsigned int jStrLen(char* charStr) {
+unsigned int jStrLen(const char* charStr) {
     unsigned int len = 0;
-    char* p = charStr; 
+    char* p = (char*)charStr; 
     
     while(*p != '\0') {
         ++len;
@@ -35,46 +39,52 @@ unsigned int jStrLen(char* charStr) {
 }
 
 //create a new string
-jString jStringNew(char* charStr) {
-    jString str  = {};
+jString jStringNew(const char* charStr) {
+    jString str;
     
-    if (charStr != NULL) {
-        str.alloc = DEFAULT_STRING_SIZE;
+    if (*charStr != NULL) {
         str.length = jStrLen(charStr);
-        
-        memcpy(str.data,
-               charStr,
-               str.length);
+        str.data = (char*)malloc(DEFAULT_STRING_SIZE);
+        // TODO(Jai): fix this
+        memmove(str.data,
+                charStr,
+                str.length);
+        str.alloc = DEFAULT_STRING_SIZE; //2MB
         str.data[str.length] = '\0';
     } else {
-        str.alloc = 1;
-        str.data = (char*)malloc(1);
-        str.data[0] = '\0';
         str.length = 0;
+        str.data = (char*)malloc(1);
+        str.alloc = 1;
+        str.data[0] = '\0';
     }
     
     return (str);
 }
 
 //grow the string
-void jStringGrow(jString* str) {
+inline internal void jStringGrow(jString* str) {
     str->data = (char*)realloc(str->data,
                                (str->alloc + megaBytes(2)));
+    str->alloc = str->alloc + megaBytes(2);
 }
 
-void jStringAdd(jString str, char* newChars) {
-    unsigned int strLength = jStrLen(str.data);
+void jStringAdd(jString* str, const char* newChars) {
+    unsigned int strLength = str->length;
     unsigned int newCharLength = jStrLen(newChars);
     unsigned int newLength = strLength + newCharLength;
     
-    if ((strLength + newCharLength) >= str.alloc) {
-        jStringGrow(&str);
+    if ((strLength + newCharLength) >= str->alloc) {
+        jStringGrow(str);
     }
-    memcpy((str.data + str.length), 
-           newChars, 
-           newCharLength);
-    str.data[newLength] = '\0';
-    str.length = newLength;
+    memmove((str->data + str->length), 
+            newChars, 
+            newCharLength);
+    str->data[newLength] = '\0';
+    str->length = newLength;
+}
+
+void jStringFree(jString* str) {
+    free(str->data);
 }
 
 #endif //JSTRING_H

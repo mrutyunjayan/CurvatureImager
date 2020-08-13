@@ -5,20 +5,32 @@
 // size of array / size of each element in the array}
 //   bytes       /          bytes
 
+#define WIDTH 4
+#define HEIGHT 4
+
 int main(int argc, char** argv) {
-#if 0
     const int imageHeight = 2;
     const int imageWidth = 3;
     
-    char* hw[] ;
-    printf("%s\n", hw);
-    int hwSize = numOfElements(hw);
+    char* img = "P6\n#image.ppm\n";
     
-    FILE* fileHandle = fopen("image.ppm",
+    jString test = jStringNew(img);
+    jStringAdd(&test,
+               " world");
+    
+    printf("string: %s\nallocation:  %d\nlength:  %d\n ",
+           test.data,
+           test.alloc,
+           test.length);
+    
+    int imgSize = numOfElements(test.data);
+    
+    FILE* fileHandle = fopen("image.txt",
                              "w");
     fprintf(fileHandle,
-            "%s", hw);
-#endif
+            "%s", test.data);
+    
+    jStringFree(&test);
     
     return (0);
 }

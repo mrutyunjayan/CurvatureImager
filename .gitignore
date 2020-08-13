@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+.vs/slnx.sqlite
+.vs/ProjectSettings.json
+.vs/VSWorkspaceState.json
+build
+data
+.vs/CurvatureImager/v16/.suo
+image.txt
+.vs/CurvatureImager/v16/Browse.VC.db
+.vs/CurvatureImager/v16/ipch/AutoPCH/52865fc593ba0660/MAIN.ipch

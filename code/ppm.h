@@ -23,22 +23,18 @@ typedef struct {
     uint16_t width;
     uint16_t height;
     uint16_t maxValue;
-    char name[31];
 } ppmInfo;
 
 ppmInfo* ppmCreateInfo(uint8_t type,
                        uint16_t width,
                        uint16_t height,
-                       uint16_t maxValue,
-                       char* name /*MAX 31 chars*/ ) {
+                       uint16_t maxValue) {
     ppmInfo* newPpmInfo = (ppmInfo*)malloc(sizeof(ppmInfo));
     
     newPpmInfo->type = type;
     newPpmInfo->width = width;
     newPpmInfo->height = height;
     newPpmInfo->maxValue = maxValue;
-    strcpy(newPpmInfo->name,
-           name);
     
     return (newPpmInfo);
 }
@@ -51,8 +47,8 @@ int ppmPrint(ppmInfo* ppm,
              outString* buffer) {
     uint16_t errorCode = 0;
     errorCode = sprintf(buffer->data,
-                        "P%d\n#%s\n%d %d\n%d\n",
-                        ppm->type, ppm->name, ppm->width, ppm->height,ppm->maxValue);
+                        "P%d\n%d %d\n%d\n",
+                        ppm->type, ppm->width, ppm->height,ppm->maxValue);
     outStringUpdateLength(buffer);
     
     int i = 0;

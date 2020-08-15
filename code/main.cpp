@@ -16,8 +16,7 @@ int main(int argc, char** argv) {
     ppmInfo* image = ppmCreateInfo(PPM_TYPE,
                                    WIDTH,
                                    HEIGHT,
-                                   MAX_VALUE,
-                                   "image");
+                                   MAX_VALUE);
     if (ppmPrint(image,
                  &buffer) < 0) {
         printf("ERROR writing to string");

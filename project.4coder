@@ -34,9 +34,10 @@ command_list = {
             { "./build/CurvatureImager" , .os = "mac"   }, }, },
  { .name = "debug",
    .out = "*DEBUG*", .footer_panel = false, .save_dirty_files = false,
-   .cmd = { { "devenv build\CurvatureImage.exe", .os = "win"   },
+   .cmd = { { "debug.bat", .os = "win"   },
             { "./build/CurvatureImager" , .os = "linux" },
             { "./build/CurvatureImager" , .os = "mac"   }, }, },
 };
 fkey_command[1] = "build";
 fkey_command[2] = "run";
+fkey_command[3] = "debug";

@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+
+# Other Files
 .vs/slnx.sqlite
 .vs/ProjectSettings.json
 .vs/VSWorkspaceState.json

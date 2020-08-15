@@ -45,7 +45,6 @@ jString jStringNew(const char* charStr) {
     if (*charStr != NULL) {
         str.length = jStrLen(charStr);
         str.data = (char*)malloc(DEFAULT_STRING_SIZE);
-        // TODO(Jai): fix this
         memmove(str.data,
                 charStr,
                 str.length);
@@ -83,6 +82,7 @@ void jStringAdd(jString* str, const char* newChars) {
     str->length = newLength;
 }
 
+//free memory after use
 void jStringFree(jString* str) {
     free(str->data);
 }

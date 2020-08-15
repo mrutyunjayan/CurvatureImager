@@ -2,26 +2,21 @@
 #include "outString.h"
 #include "ppm.h"
 
-#define numOfElements(a)                                                       \
-{ (sizeof(a) / sizeof(a[0])) }
-// size of array / size of each element in the array}
-//   bytes       /          bytes
-
-#define WIDTH 640
-#define HEIGHT 480
+#define WIDTH 3
+#define HEIGHT 2
+#define MAX_VALUE 255
+#define PPM_TYPE 3
 
 int main(int argc, char** argv) {
-    const int imageHeight = 2;
-    const int imageWidth = 3;
-    
     outString buffer;
     printf("%d", sizeof(buffer));
     buffer.data = (char*)malloc(DEFAULT_STRING_SIZE);
     buffer.allocation = DEFAULT_STRING_SIZE;
     
-    ppmInfo* image = ppmCreateInfo(6,
+    ppmInfo* image = ppmCreateInfo(PPM_TYPE,
                                    WIDTH,
                                    HEIGHT,
+                                   MAX_VALUE,
                                    "image");
     if (ppmPrint(image,
                  &buffer) < 0) {
@@ -32,7 +27,7 @@ int main(int argc, char** argv) {
     printf("length: %d\n",
            buffer.length);
     
-    FILE* fileHandle = fopen("image.txt",
+    FILE* fileHandle = fopen("image.ppm",
                              "w");
     fprintf(fileHandle,
             "%s", buffer.data);

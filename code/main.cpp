@@ -1,6 +1,7 @@
 #include "main.h"
 #include "outString.h"
 #include "ppm.h"
+#include "vec3.h"
 
 #define WIDTH 3
 #define HEIGHT 2
@@ -9,7 +10,6 @@
 
 int main(int argc, char** argv) {
     outString buffer;
-    printf("%d", sizeof(buffer));
     buffer.data = (char*)malloc(DEFAULT_STRING_SIZE);
     buffer.allocation = DEFAULT_STRING_SIZE;
     
@@ -23,8 +23,10 @@ int main(int argc, char** argv) {
         return (-1);
     }
     
-    printf("length: %d\n",
-           buffer.length);
+    Vec3 test;
+    
+    printf("Memory occuppied by Vec3: %d\n",
+           sizeof(test));
     
     FILE* fileHandle = fopen("image.ppm",
                              "w");
